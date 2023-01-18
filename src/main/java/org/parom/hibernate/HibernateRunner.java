@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
+import org.parom.hibernate.entity.Role;
 import org.parom.hibernate.entity.User;
 
 import java.time.LocalDate;
@@ -39,6 +40,7 @@ public class HibernateRunner {
                     .username("ivan@gmail.com")
                     .firstname("Ivan")
                     .lastname("Ivanov")
+                    .role(Role.ADMIN)
                     .build();
 
             session.beginTransaction();
