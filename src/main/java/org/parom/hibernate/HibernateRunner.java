@@ -1,5 +1,6 @@
 package org.parom.hibernate;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -27,8 +28,10 @@ public class HibernateRunner {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
 //        configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
-        configuration.addAttributeConverter(new BirthdayConverter(),true);
+        configuration.addAttributeConverter(new BirthdayConverter(), true);
 
+        //регистрируем тип в конфигурации
+        configuration.registerTypeOverride(new JsonBinaryType());
 
         //для работы с сущьностью нужно её сконфигурировать
         // 1ый вариант, 2ой вариант в файле hibernate.cfg.xml <mapping
@@ -39,10 +42,16 @@ public class HibernateRunner {
              Session session = sessionFactory.openSession()) {
             User user = User.builder()
                     .birthDate(new Birthday(LocalDate.of(2000, 1, 19)))
-                    .username("ivan@gmail.com")
+                    .username("1ivan@gmail.com")
                     .firstname("Ivan")
                     .lastname("Ivanov")
                     .role(Role.ADMIN)
+                    .info("""
+                            {
+                            "name": "Ivan",
+                            "id": 25
+                            }
+                            """)
                     .build();
 
             session.beginTransaction();

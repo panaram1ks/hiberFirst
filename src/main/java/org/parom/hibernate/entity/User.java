@@ -1,9 +1,12 @@
 package org.parom.hibernate.entity;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.parom.hibernate.converter.BirthdayConverter;
 
 import javax.persistence.*;
@@ -19,6 +22,8 @@ import javax.persistence.*;
 
 @Entity //hibernate
 @Table(name = "users", schema = "public")//hibernate
+
+@TypeDef(name = "customName", typeClass = JsonBinaryType.class)//можно задать псевдонимы для типов данных
 public class User {
 
     @Id //hibernate
@@ -34,6 +39,13 @@ public class User {
 //    private Integer age;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    //JsonBinaryType
+   // @Type(type= "com.vladmihalcea.hibernate.type.json.JsonBinaryType") //или
+    //@Type(type= "jsonb")//или
+    @Type(type = "customName")
+    //нужно еще этот тип зарегистрировать в configuration
+    private String info;
 
 //    public User() {
 //    }
