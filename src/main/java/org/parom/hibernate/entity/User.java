@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.parom.hibernate.converter.BirthdayConverter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 /**
  * @author E.Parominsky 17/01/2023 09:05
@@ -18,16 +18,20 @@ import java.time.LocalDate;
 @Builder //lombok
 
 @Entity //hibernate
-@Table(name = "users", schema = "public")
+@Table(name = "users", schema = "public")//hibernate
 public class User {
 
     @Id //hibernate
     private String username;
     private String firstname;
     private String lastname;
+
+    //нужно подсказать hibernate как мы собираемся конвертировать поле
+    @Convert(converter = BirthdayConverter.class)
     @Column(name= "birth_date")
-    private LocalDate birthDate;
-    private Integer age;
+    private Birthday birthDate;
+
+//    private Integer age;
     @Enumerated(EnumType.STRING)
     private Role role;
 

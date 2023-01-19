@@ -2,8 +2,9 @@ package org.parom.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
+import org.parom.hibernate.converter.BirthdayConverter;
+import org.parom.hibernate.entity.Birthday;
 import org.parom.hibernate.entity.Role;
 import org.parom.hibernate.entity.User;
 
@@ -26,6 +27,8 @@ public class HibernateRunner {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
 //        configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
+        configuration.addAttributeConverter(new BirthdayConverter(),true);
+
 
         //для работы с сущьностью нужно её сконфигурировать
         // 1ый вариант, 2ой вариант в файле hibernate.cfg.xml <mapping
@@ -35,8 +38,7 @@ public class HibernateRunner {
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             User user = User.builder()
-                    .age(19)
-                    .birthDate(LocalDate.of(2000, 1, 19))
+                    .birthDate(new Birthday(LocalDate.of(2000, 1, 19)))
                     .username("ivan@gmail.com")
                     .firstname("Ivan")
                     .lastname("Ivanov")
