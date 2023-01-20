@@ -5,9 +5,12 @@ import org.parom.hibernate.entity.User;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Optional;
@@ -17,6 +20,22 @@ import java.util.stream.Collectors;
  * @author E.Parominsky 18/01/2023 08:25
  */
 class HibernateRunnerTest {
+
+    @Test
+    void checkGetReflectionApi() throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.getString("username");
+        resultSet.getString("lastname");
+        Class<User> clazz = User.class;
+        Constructor<User> constructor = clazz.getConstructor();
+        User user = constructor.newInstance();
+
+        Field username = clazz.getDeclaredField("username");
+        username.setAccessible(true);
+        username.set(user, resultSet.getString("username"));
+
+    }
 
     @Test
     void checkReflectionApi() throws SQLException, IllegalAccessException {

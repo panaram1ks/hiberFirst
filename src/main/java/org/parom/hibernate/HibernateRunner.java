@@ -40,27 +40,36 @@ public class HibernateRunner {
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
-            User user = User.builder()
-                    .birthDate(new Birthday(LocalDate.of(2000, 1, 19)))
-                    .username("1ivan@gmail.com")
-                    .firstname("Ivan")
-                    .lastname("Ivanov")
-                    .role(Role.ADMIN)
-                    .info("""
-                            {
-                            "name": "Ivan",
-                            "id": 25
-                            }
-                            """)
-                    .build();
+//            User user = User.builder()
+//                    .birthDate(new Birthday(LocalDate.of(2000, 1, 19)))
+//                    .username("1ivan@gmail.com")
+//                    .firstname("Ivan")
+//                    .lastname("Ivanov")
+//                    .role(Role.ADMIN)
+//                    .info("""
+//                            {
+//                            "name": "Ivan",
+//                            "id": 25
+//                            }
+//                            """)
+//                    .build();
 
             session.beginTransaction();
-            session.save(user);
+//            session.save(user);
+            User user1 = session.get(User.class, "ivan@gmail.com");
+            System.out.println(session.isDirty());
+            user1.setLastname("Petrov");//изменение которое вызовет update в базе данных при закрытии сессии или коммите
+            System.out.println(session.isDirty());
+
+            //3 способа очистить кеш сессии
+//            session.evict(user1);//удаляет user1 из кеша 1 уровня (persistanceContexta)
+//            session.clear();//очищает весь кеш первого уровня (persistanceContext)
+//            session.close();
+            User user2 = session.get(User.class, "ivan@gmail.com");
+
             session.getTransaction().commit();
 //            session.getTransaction().rollback();
-
             System.out.println("OK ");
-
         }
 
 
