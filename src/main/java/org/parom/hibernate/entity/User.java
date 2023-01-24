@@ -43,9 +43,9 @@ public class User {
     //JsonBinaryType
    // @Type(type= "com.vladmihalcea.hibernate.type.json.JsonBinaryType") //или
     //@Type(type= "jsonb")//или
-    @Type(type = "customName")
-    //нужно еще этот тип зарегистрировать в configuration
-    private String info;
+//    @Type(type = "customName")
+//    //нужно еще этот тип зарегистрировать в configuration
+//    private String info;
 
 //    public User() {
 //    }

@@ -15,6 +15,11 @@
 
         <mapping class="org.parom.hibernate.entity.User"/>
 
+<!--        <property name="hbm2ddl.auto">create</property>-->
+<!--        <mapping class="org.parom.hibernate.entityAnnotated.UserAnnotated"/>-->
+<!--        <mapping class="org.parom.hibernate.entityAnnotated.Item"/>-->
+<!--        <mapping class="org.parom.hibernate.entityAnnotated.Bid"/>-->
+
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
     </session-factory>

@@ -1,3 +1,5 @@
+package org.parom.hibernate;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.parom.hibernate.entity.User;
