@@ -1,6 +1,7 @@
 package org.parom.hibernate;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -17,9 +18,11 @@ import java.time.LocalDate;
 /**
  * @author E.Parominsky 17/01/2023 08:29
  */
+@Slf4j
 public class HibernateRunner {
 
-    private static final Logger log = LoggerFactory.getLogger(HibernateRunner.class);
+//    @Slf4j генерирует такую строку автоматически
+//    private static final Logger log = LoggerFactory.getLogger(HibernateRunner.class);
 
     public static void main(String[] args) {
 //        BlockingDeque<Connection> pool = null;

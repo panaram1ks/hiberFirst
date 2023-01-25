@@ -14,10 +14,13 @@
 
 <!--    для записи в файл-->
     <appender name="file" class="org.apache.log4j.RollingFileAppender">
+<!--        значит будет в рутовой дирректории проекта studyhiber-->
         <param name="file" value="hibernate-starter.log"/>
 
         <param name="append" value="true"/>
+<!--        max log file size-->
         <param name="maxFileSize" value="1KB"/>
+<!--        max количество таких файлов-->
         <param name="maxBackupIndex" value="10"/>
 
         <layout class="org.apache.log4j.PatternLayout">
@@ -29,9 +32,21 @@
         </filter>
     </appender>
 
-    <root>
-        <level value="error" />
+<!--    additivity="false" не дает дублировать сообщения в логах ели оно уже используется в другом логере-->
+    <logger name="org.parom" additivity="false">
+        <level value="info"/>
         <appender-ref ref="console" />
+    </logger>
+
+    <logger name="org.parom.hibernate.entity" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="console" />
+    </logger>
+
+    <root>
+        <level value="info" />
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
     </root>
 
 </log4j:configuration>
