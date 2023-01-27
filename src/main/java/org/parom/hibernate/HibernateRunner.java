@@ -51,12 +51,12 @@ public class HibernateRunner {
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             User user = User.builder()
-
-                    .username("peter@gmail.com")
+                    .username("peter4@gmail.com")
                     .persanalInfo(PersanalInfo.builder()
                             .lastname("Petrov")
                             .firstname("Peter")
                             .build())
+                    .info("{\"name\":\"John\", \"age\":30, \"car\":null}")
                     .role(Role.ADMIN)
 //                    .info("""
 //                            {
@@ -71,19 +71,18 @@ public class HibernateRunner {
             Transaction transaction = session.beginTransaction();
             log.trace("Transaction is created, {}", transaction);
             session.saveOrUpdate(user);
-            session.flush();
-            log.trace("User is in persistent state: {}, session: {}", user, session);
-
-            User user1 = session.get(User.class, "1ivan@gmail.com");
-            System.out.println(session.isDirty());
-            user1.getPersanalInfo().setLastname("TTTTTT");//изменение которое вызовет update в базе данных при закрытии сессии или коммите
-            System.out.println(session.isDirty());
-
+//            session.flush();
+//            log.trace("User is in persistent state: {}, session: {}", user, session);
+//
+//            User user1 = session.get(User.class, "1ivan@gmail.com");
+//            System.out.println(session.isDirty());
+//            user1.getPersanalInfo().setLastname("TTTTTT");//изменение которое вызовет update в базе данных при закрытии сессии или коммите
+//            System.out.println(session.isDirty());
             //3 способа очистить кеш сессии
 //            session.evict(user1);//удаляет user1 из кеша 1 уровня (persistanceContexta)
 //            session.clear();//очищает весь кеш первого уровня (persistanceContext)
 //            session.close();
-            User user2 = session.get(User.class, "ivan@gmail.com");
+//            User user2 = session.get(User.class, "ivan@gmail.com");
 
             session.getTransaction().commit();
             log.warn("User is in detached state: {}, session is closed {}", user, session);

@@ -1,11 +1,24 @@
 CREATE TABLE users
 (
-    username VARCHAR(128) primary key ,
+--     id BIGSERIAL primary key ,
+    id BIGINT primary key ,
+    username VARCHAR(128) unique ,
     firstname VARCHAR(128),
     lastname VARCHAR(128),
     birth_date DATE,
 --     role INT
-    role VARCHAR(32)
+    role VARCHAR(32),
+    info JSONB
 );
 
+create sequence user_id_seq owned by users.id;
+
+drop sequence user_id_seq;
+
 DROP TABLE users;
+
+create table all_sequence
+(
+    table_name VARCHAR(32) primary key ,
+    pk_value BIGINT not null
+);

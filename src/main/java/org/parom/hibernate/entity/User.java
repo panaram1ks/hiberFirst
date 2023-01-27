@@ -27,22 +27,30 @@ import javax.persistence.*;
 public class User {
 
     @Id //hibernate
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @SequenceGenerator(name = "user_gener", sequenceName = "user_id_seq", allocationSize = 1)
+    @TableGenerator(name = "user_gener_table", table = "all_sequence",
+            allocationSize = 1, pkColumnName = "table_name", pkColumnValue = "next_val", initialValue = 0)
+    @GeneratedValue(generator = "user_gener_table", strategy = GenerationType.TABLE)
+    private Long id;
+
+    @Column(unique = true)
     private String username;
 
     @Embedded
     @AttributeOverride(name = "birthDate", column = @Column(name = "birth_date"))
     private PersanalInfo persanalInfo;
 
-//    private Integer age;
+    //    private Integer age;
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    //JsonBinaryType
-   // @Type(type= "com.vladmihalcea.hibernate.type.json.JsonBinaryType") //или
-    //@Type(type= "jsonb")//или
+//    JsonBinaryType
+    // @Type(type= "com.vladmihalcea.hibernate.type.json.JsonBinaryType") //или
+    @Type(type= "jsonb")//или
 //    @Type(type = "customName")
 //    //нужно еще этот тип зарегистрировать в configuration
-//    private String info;
+    private String info;
 
 //    public User() {
 //    }
