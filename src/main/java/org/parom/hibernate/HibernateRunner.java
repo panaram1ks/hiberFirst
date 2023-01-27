@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.parom.hibernate.converter.BirthdayConverter;
 import org.parom.hibernate.entity.Birthday;
+import org.parom.hibernate.entity.PersanalInfo;
 import org.parom.hibernate.entity.Role;
 import org.parom.hibernate.entity.User;
 import org.slf4j.Logger;
@@ -50,10 +51,12 @@ public class HibernateRunner {
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             User user = User.builder()
-                    .birthDate(new Birthday(LocalDate.of(2000, 1, 19)))
-                    .username("1ivan@gmail.com")
-                    .firstname("Ivan")
-                    .lastname("Ivanov")
+
+                    .username("peter@gmail.com")
+                    .persanalInfo(PersanalInfo.builder()
+                            .lastname("Petrov")
+                            .firstname("Peter")
+                            .build())
                     .role(Role.ADMIN)
 //                    .info("""
 //                            {
@@ -62,6 +65,7 @@ public class HibernateRunner {
 //                            }
 //                            """)
                     .build();
+//            .birthDate(new Birthday(LocalDate.of(2000, 1, 19)))
             log.info("User entity is in transient state, object: {}", user);
 
             Transaction transaction = session.beginTransaction();
@@ -72,7 +76,7 @@ public class HibernateRunner {
 
             User user1 = session.get(User.class, "1ivan@gmail.com");
             System.out.println(session.isDirty());
-            user1.setLastname("Petrov");//изменение которое вызовет update в базе данных при закрытии сессии или коммите
+            user1.getPersanalInfo().setLastname("TTTTTT");//изменение которое вызовет update в базе данных при закрытии сессии или коммите
             System.out.println(session.isDirty());
 
             //3 способа очистить кеш сессии

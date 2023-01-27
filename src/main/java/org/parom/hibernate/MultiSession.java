@@ -12,8 +12,8 @@ public class MultiSession {
     public static void main(String[] args) {
         User user1 = User.builder()
                 .username("peter@gmail.com")
-                .firstname("Peter")
-                .lastname("Peterov")
+//                .firstname("Peter")
+//                .lastname("Peterov")
                 .build();
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session1 = sessionFactory.openSession()) {
@@ -28,14 +28,14 @@ public class MultiSession {
                 session2.beginTransaction();
 //                session2.delete(user1);
 //                    refresh/merge
-                user1.setFirstname("Sveta");
+//                user1.setFirstname("Sveta");
                 session2.refresh(user1);
                 //происходит
 //                User freshUser = session2.get(User.class, user1.getFirstname());
 //                user1.setLastname(freshUser.getLastname());
 //                user1.setUsername(freshUser.getUsername());
 
-                user1.setFirstname("Sveta");
+//                user1.setFirstname("Sveta");
                 session2.merge(user1);
                 //происходит
                 //тепеть user1 главнее и все что мы меняем попадет в базу данных

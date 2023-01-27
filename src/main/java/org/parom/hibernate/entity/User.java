@@ -28,13 +28,10 @@ public class User {
 
     @Id //hibernate
     private String username;
-    private String firstname;
-    private String lastname;
 
-    //нужно подсказать hibernate как мы собираемся конвертировать поле
-    @Convert(converter = BirthdayConverter.class)
-    @Column(name= "birth_date")
-    private Birthday birthDate;
+    @Embedded
+    @AttributeOverride(name = "birthDate", column = @Column(name = "birth_date"))
+    private PersanalInfo persanalInfo;
 
 //    private Integer age;
     @Enumerated(EnumType.STRING)
